@@ -12,6 +12,8 @@ import pandas
         'book_index' is a dictionary linking a page to an index.
         'book_pages' is the other way around.        
 '''
+
+
 class MarkovChain(object):
     def __init__(self, config_path):
         self.dataframe = pandas.read_csv(config_path, header=0, delim_whitespace=True)
@@ -30,4 +32,4 @@ class MarkovChain(object):
 
 
 # An example:
-weather_chain = MarkovChain("probabilities.txt")
+ex = MarkovChain("probabilities.txt")

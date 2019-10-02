@@ -1,0 +1,3 @@
+probability_matrix= probabilities.txt
+initial_page= firstPage
+final_pages= thirdPage

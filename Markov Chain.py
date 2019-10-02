@@ -1,5 +1,16 @@
+import re
 import numpy
 import pandas
+
+
+config = open("config.txt", "r")
+probs_file_path = config.readline().split()[1]
+first_page = config.readline().split()[1]
+final_pages = [page for page in config.readline().split()[1:]]
+
+
+class ExceptionHandler(Exception):
+    pass
 
 
 ''' The Markov Chain is a class initialized with two matrixes obtained parsing a file and getting a dataframe from it.
@@ -21,15 +32,28 @@ class MarkovChain(object):
         self.pages = [col for col in self.dataframe.columns]
         self.book_index = {self.pages[index]: index for index in range(len(self.pages))}
         self.book_pages = {index: self.pages[index] for index in range(len(self.pages))}
+        self.final_pages = []
+        if first_page in self.pages:
+            self.current = first_page
+        else:
+            raise ExceptionHandler("First page not present in probabilities file!")
+        for page in final_pages:
+            if page in self.pages:
+                self.final_pages.append(page)
+            else:
+                raise ExceptionHandler("Final page not present in probabilities file!")
 
-    ''' The method returns a possible choice as the next state (page of the book) of the current state (curr).'''
-
-    def next(self, curr):
+    ''' 
+        The method 'next' returns a possible choice as the next state (page of the book) of the current state (curr).
+        If the current page is a final page, it returns nothing.
+    '''
+    def next(self):
         return numpy.random.choice(
             self.pages,
-            p=self.transition_matrix[self.book_index[curr], :]
-        )
+            p=self.transition_matrix[self.book_index[self.current], :]
+        ) if self.current not in self.final_pages else print("The End.")
 
 
 # An example:
-ex = MarkovChain("probabilities.txt")
+ex = MarkovChain(probs_file_path)
+print(ex.next())

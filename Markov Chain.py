@@ -28,7 +28,7 @@ class ExceptionHandler(Exception):
 class MarkovChain(object):
     def __init__(self, config_path):
         self.dataframe = pandas.read_csv(config_path, header=0, delim_whitespace=True)
-        self.transition_matrix = numpy.atleast_2d(self.dataframe.as_matrix())
+        self.transition_matrix = numpy.atleast_2d(self.dataframe.values)
         self.pages = [col for col in self.dataframe.columns]
         self.book_index = {self.pages[index]: index for index in range(len(self.pages))}
         self.book_pages = {index: self.pages[index] for index in range(len(self.pages))}

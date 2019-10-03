@@ -1,4 +1,3 @@
-import re
 import numpy
 import pandas
 
@@ -13,7 +12,8 @@ class ExceptionHandler(Exception):
     pass
 
 
-''' The Markov Chain is a class initialized with two matrixes obtained parsing a file and getting a dataframe from it.
+''' 
+    The Markov Chain is a class initialized with two matrixes obtained parsing a file and getting a dataframe from it.
     The first matrix, 'transition_matrix', is a two-dimensional matrix representing the probability of a transition.
     The second second, 'pages', is a one-dimensional matrix representing the states (i.e. the pages of a book).   
     

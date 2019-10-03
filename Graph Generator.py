@@ -1,5 +1,10 @@
 """
-    Class supported to create the Markov Chain and retrain information in a faster and cleaner way.
+    Support class to create the Markov Chain and retrain information in a faster and cleaner way.
+
+    The goal is to merge different graphs with an npc for every sub-graph merged in the general graph, which is the
+    story itself.
+
+    The Markov Chain will randomly choice the sub-graph.
 """
 
 

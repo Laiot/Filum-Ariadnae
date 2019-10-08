@@ -1,3 +1,0 @@
-probability_matrix= Configuration Files/probabilities.txt
-initial_page= firstPage
-final_pages= thirdPage

@@ -5,5 +5,6 @@
 
 
 class Support(object):
-    def __init__(self, name):
+    def __init__(self, name, actions):
         self.name = name
+        self.actions = actions

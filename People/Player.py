@@ -7,8 +7,8 @@ class PC(object):
     def __init__(self):
         self.name = "Arianna"
         self.stress = 0
-        self.health = 100
-        self.psyche = 100
+        self.phys_viol_lv = 0  # Level of physical violence suffered.
+        self.psych_viol_lv = 0  # Level of psychological violence suffered.
 
     @staticmethod
     def get_choices(sub_graph):

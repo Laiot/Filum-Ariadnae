@@ -33,9 +33,7 @@ class MarkovChain(object):
         else:
             raise ExceptionHandler("First page not present in probabilities file!")
         for page in self.final_pages:
-            if page in self.pages:
-                self.final_pages.append(page)
-            else:
+            if page not in self.pages:
                 raise ExceptionHandler("Final page not present in probabilities file!")
 
     ''' 

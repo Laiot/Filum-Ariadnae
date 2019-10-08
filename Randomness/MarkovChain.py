@@ -2,12 +2,6 @@ import numpy
 import pandas
 
 
-config = open("config.txt", "r")
-probs_file_path = config.readline().split()[1]
-first_page = config.readline().split()[1]
-final_pages = [page for page in config.readline().split()[1:]]
-
-
 class ExceptionHandler(Exception):
     pass
 
@@ -26,18 +20,19 @@ class ExceptionHandler(Exception):
 
 
 class MarkovChain(object):
-    def __init__(self, config_path):
+    def __init__(self, config_path, first_page, final_pages):
         self.dataframe = pandas.read_csv(config_path, header=0, delim_whitespace=True)
         self.transition_matrix = numpy.atleast_2d(self.dataframe.values)
         self.pages = [col for col in self.dataframe.columns]
         self.book_index = {self.pages[index]: index for index in range(len(self.pages))}
         self.book_pages = {index: self.pages[index] for index in range(len(self.pages))}
-        self.final_pages = []
-        if first_page in self.pages:
-            self.current = first_page
+        self.first_page = first_page
+        self.final_pages = final_pages
+        if self.first_page in self.pages:
+            self.current = self.first_page
         else:
             raise ExceptionHandler("First page not present in probabilities file!")
-        for page in final_pages:
+        for page in self.final_pages:
             if page in self.pages:
                 self.final_pages.append(page)
             else:
@@ -54,6 +49,3 @@ class MarkovChain(object):
         ) if self.current not in self.final_pages else print("The End.")
 
 
-# An example:
-ex = MarkovChain(probs_file_path)
-print(ex.next())

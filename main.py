@@ -110,8 +110,12 @@ def load_books():
                 abstract = abs_file.read()
         except Exception:
             abstract = 'Un libro-gioco'
+
+        with open(b + '/probab.txt', encoding="utf-8") as probab_file:
+            probabs = probab_file.read()
+
         dot, g, s = load_book(b)
-        books_directory[b] = booktitle, dot, g, s, abstract
+        books_directory[b] = booktitle, dot, g, s, abstract, probabs
         #TODO add the probabilities settings when adding a book
 
 
@@ -242,10 +246,12 @@ def index():
     for b in books_directory:
         booktitle = books_directory[b][0]
         text = books_directory[b][-1]
+        probabs = books_directory[b][5]
         m = {
             'link': b,
             'title': booktitle,
             'text': text,
+            'probabilities': probabs
         }
         mapping['content'] += s.substitute(m) + '\n'
     return template_page.substitute(mapping)
@@ -351,7 +357,7 @@ def game():
     except KeyError:
         node = None
         history = ''
-    booktitle, dot, g, s, abstract = books_directory[path]
+    booktitle, dot, g, s, abstract, probabs = books_directory[path]
     if not node: node = s
     next = list(g.successors(node))
     #TODO Scegliere un'unica pagina finale? Scegliendo quella con il numero più grande.

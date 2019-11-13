@@ -29,10 +29,10 @@ import pydot
 import networkx as nx
 from uuid import uuid4
 from glob import glob
-from urllib.request import urlopen;
+from urllib.request import urlopen
 from flask_security import Security, login_required, SQLAlchemySessionUserDatastore
 from server.database import db_session, init_db
-from server.models import User, Role,Survey, Keys
+from server.models import User, Role, Survey, Keys
 from flask_security.forms import RegisterForm, ChangePasswordForm
 from flask_security.utils import hash_password
 from flask_login import current_user

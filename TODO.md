@@ -4,4 +4,4 @@
 
 + Creare una pagina HTML dove dare la possibilità all'utente di modificare in modo user-friendly il file delle probabilità.
 
-
++ [ATTESA DATABASE] Aggregare generatore grafi per Markov.

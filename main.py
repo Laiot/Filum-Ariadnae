@@ -14,6 +14,7 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import os
 
 __doc__ = '''This (simple) web application serves gamebook-style navigable stories from the book/ folder, and proposes a configurable questionnaire at the end of the story.
 The questionnaire data are stored in a ZODB database.
@@ -38,6 +39,8 @@ from flask_login import current_user
 from wtforms import Form, DateField, TextAreaField, validators
 from datetime import date
 from secrets import token_hex
+from Randomness.MarkovChain import MarkovChain
+from pathlib import Path
 
 
 app = Flask(__name__, static_url_path='')
@@ -111,11 +114,11 @@ def load_books():
         except Exception:
             abstract = 'Un libro-gioco'
 
-        with open(b + '/probab.txt', encoding="utf-8") as probab_file:
-            probabs = probab_file.read()
+        with open(b + '/config.txt', encoding="utf-8") as configs:
+            config_file = configs.read()
 
         dot, g, s = load_book(b)
-        books_directory[b] = booktitle, dot, g, s, abstract, probabs
+        books_directory[b] = booktitle, dot, g, s, abstract, config_file
         #TODO add the probabilities settings when adding a book
 
 
@@ -246,12 +249,12 @@ def index():
     for b in books_directory:
         booktitle = books_directory[b][0]
         text = books_directory[b][-1]
-        probabs = books_directory[b][5]
+        config = books_directory[b][5]
         m = {
             'link': b,
             'title': booktitle,
             'text': text,
-            'probabilities': probabs
+            'configurations': config
         }
         mapping['content'] += s.substitute(m) + '\n'
     return template_page.substitute(mapping)
@@ -357,10 +360,15 @@ def game():
     except KeyError:
         node = None
         history = ''
-    booktitle, dot, g, s, abstract, probabs = books_directory[path]
+    booktitle, dot, g, s, abstract, config = books_directory[path]
+    dirname = Path(__file__).parent.parent
+    probs_file_path = os.path.join(dirname, config.readline().split()[1])
+    first_page = config.readline().split()[1]
+    final_pages = [page for page in config.readline().split()[1:]]
+    mChain = MarkovChain(probs_file_path, first_page, final_pages)
     if not node: node = s
-    next = list(g.successors(node))
-    #TODO Scegliere un'unica pagina finale? Scegliendo quella con il numero più grande.
+    next = mChain.next()
+    #TODO Scegliere un'unica pagina finale? Scegliendo quella con il numero più grande. DONE
     mapping = {
         'title': booktitle,
         'content': """			<h3>${name}</h3>

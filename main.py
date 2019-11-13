@@ -367,8 +367,7 @@ def game():
     final_pages = [page for page in config.readline().split()[1:]]
     mChain = MarkovChain(probs_file_path, first_page, final_pages)
     if not node: node = s
-    next = mChain.next()
-    #TODO Scegliere un'unica pagina finale? Scegliendo quella con il numero più grande. DONE
+    next = mChain.next_list()                                       #TODO AGGIUNTE PROBABILITA'
     mapping = {
         'title': booktitle,
         'content': """			<h3>${name}</h3>
@@ -398,7 +397,6 @@ def game():
         'history': history + '.' + node,
     }
     if len(next): mapping['content'] = mapping['content']
-    #TODO maybe inserting probabilities here?
     for n in next:
         label = eval(dot.get_node(n)[0].get_attributes()['label'])
         m['label'] = label

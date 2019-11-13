@@ -46,4 +46,8 @@ class MarkovChain(object):
             p=self.transition_matrix[self.book_index[self.current], :]
         ) if self.current not in self.final_pages else print("The End.")
 
-
+    def next_list(self):
+        n_list = []
+        while self.current not in self.final_pages:
+            n_list.append(self.next())
+        return n_list

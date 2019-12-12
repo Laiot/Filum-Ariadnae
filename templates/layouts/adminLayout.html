@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+      <title>{% block title%}{% endblock%}</title>
+    <!-- Bootstrap core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="../fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../css/admin.css" rel="stylesheet">
+      {% block css %}{% endblock %}
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">Admin</a>
+
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item {% block home %}{% endblock %}">
+            <a class="nav-link" href="/admin/home">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item {% block book %}{% endblock %}">
+            <a class="nav-link" href="/admin/books">Libri</a>
+          </li>
+          <li class="nav-item {% block user %}{% endblock %}">
+            <a class="nav-link " href="/admin/users">Utenti</a>
+          </li>
+            <li class="nav-item {% block key %}{% endblock %}">
+            <a class="nav-link " href="/admin/keys">Chiavi</a>
+          </li>
+        </ul>
+      </div>
+        <a href="/admin/changePassword" class="list-group-item" style=" background: none;"><i class="fa fa-user fa-lg " style=" color: white;"><label style=" margin-left: 10px; font-size: 12px;">{{user.email}}</label> </i></a>
+        <a href="/logout" class="btn btn-danger" style="color: white;">Logout</a>
+    </nav>
+
+   <div class="container">
+       {% block pagecontent %}{% endblock %}
+
+   </div>
+
+    <script src="../vendor/jquery/jquery-3.2.1.min.js" ></script>
+    <script src="../vendor/bootstrap/js/popper.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+   {% block script %}{% endblock %}
+  </body>
+</html>

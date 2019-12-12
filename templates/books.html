@@ -1,0 +1,30 @@
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% extends "layouts/adminLayout.html" %}
+{% block title %}
+Admin-Users
+{% endblock %}
+{% block css %}
+<link href="../css/users.css" rel="stylesheet">
+<link rel="stylesheet" href="..\fonts\font-awesome-4.7.0\css\font-awesome.min.css">
+{% endblock %}
+
+
+{% block pagecontent %}
+{% endblock %}
+
+
+{% block script %}
+ <script src="../js/users.js"></script>
+ {% if registered=='true' %}
+<script>
+    alert("Utente registrato correttamente")
+</script>
+{% endif %}
+
+{% endblock %}
+
+
+{% block home %}{% endblock %}
+{% block book %}active{% endblock %}
+{% block user %}{% endblock %}
+{% block key %}{% endblock %}

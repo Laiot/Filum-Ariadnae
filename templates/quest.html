@@ -1,0 +1,39 @@
+<form action="/store" method="get">
+	Indicaci, per cortesia, le seguenti informazioni:
+
+
+		<h3>Hai un codice classe?</h3>
+
+		<h3>Sesso</h3>
+		<div class="quest"><label>M</label><br><input type="radio" name="gender" value="M"></div>
+		<div class="quest"><label>F</label><br><input type="radio" name="gender" value="F"></div>
+		<div class="quest"><label>A</label><br><input type="radio" name="gender" value="A"></div>
+
+		<h3>Et&agrave;</h3>
+		<input type="text" name="age" value="">
+		<h3>Residenza</h3>
+		<div class="quest"><label>Milano</label><br><input type="radio" name="residence" value="MiCity"></div>
+		<div class="quest"><label>Provincia di Milano</label><br><input type="radio" name="residence" value="MiArea"></div>
+		<div class="quest"><label>Altra Provincia</label><br><input type="radio" name="residence" value="Other"></div>
+
+
+	<div class="content">
+	Per ogni affermazione che trovi qui sotto, esprimi il tuo accordo o meno secondo una scala che va da 1 (molto d'accordo) a 5 (per nulla d'accordo):
+  </div>
+	${scaled_questions}
+	
+	${binary_questions}	
+	<div class="content">
+		<h3>Hai qualche suggerimento?</h3>
+		<input type="text" name="freetext" value="">
+	</div>
+	
+	<div class="content">
+		<p>
+		<input type="hidden" name="path" value="${path}">
+		<input type="hidden" name="history" value="${history}">
+		<input type="hidden" name="tag" value="${tag}">
+		<input type="Submit" name="submit" value="Invia il questionario">
+		</p>
+	</div>
+	</form>

@@ -1,0 +1,67 @@
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% extends "layouts/adminLayout.html" %}
+{% block title %}
+Admin-Users
+{% endblock %}
+{% block css %}
+<link href="../css/users.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block pagecontent %}
+<div class="row">
+    <div class="col-md-3">
+        <h3>Utenti registrati</h3>
+        <div class="mt-4 list-group">
+            {% for user in users %}
+            <li href="#" class="list-group-item">{{ user.email }}</li>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <div  id="regusers" class="col-md-9">
+        <h3> Crea un nuovo utente</h3>
+
+
+        {% include "security/_messages.html" %}
+        <form action="{{ url_for('users') }}" method="POST" class="form-group mt-4" name="register_user_form">
+            {{ register_user_form.hidden_tag() }}
+            {{ render_field_with_errors(register_user_form.email, class="form-control") }}
+            {{ render_field_with_errors(register_user_form.password, class="form-control") }}
+            {% if register_user_form.password_confirm %}
+            {{ render_field_with_errors(register_user_form.password_confirm, class="form-control") }}
+            {% endif %}
+            <div class="d-flex justify-content-center">
+                {{ render_field(register_user_form.submit, class="btn btn-success") }}
+            </div>
+
+
+        </form>
+
+
+
+
+    </div>
+
+
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+ <script src="../js/users.js"></script>
+ {% if registered=='true' %}
+<script>
+    alert("Utente registrato correttamente")
+</script>
+{% endif %}
+
+{% endblock %}
+
+
+{% block home %}{% endblock %}
+{% block book %}{% endblock %}
+{% block user %}active{% endblock %}
+{% block key %}{% endblock %}

@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<title>Il Filo di Arianna</title>
+		<meta http-equiv="Content-Language" content="Italian" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link href='https://fonts.googleapis.com/css?family=Varela Round' rel='stylesheet'>
+		<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	</head>
+	<body>
+	<div id="banner">
+	</div>
+
+	<div id="wrap">
+	<div id="intro">
+	<h1><a href="index">Il Filo di Arianna</a></h1>
+	<h2>Questionario</h2>
+	</div>
+
+	<div id="main">
+
+    <h3>Grazie per aver partecipato</h3>
+
+        {% if type=='PRE' %}
+        <div id="link">
+	    <div class="arrow"><img src="images/singlearrow.png" alt="<->" height="17"></div>
+
+	    <span class="content">
+		<a href="game?path={{ path }}&amp;node=1&amp;history=.0">L'incontro</a>
+	</span>
+        </div>
+        {% endif %}
+
+	</div>
+
+
+	<div id="footer">
+Il Filo di Arianna -- Progetto supportato dalla Regione Lombardia, etc.
+	</div>
+	</div>
+	</body>
+</html>

@@ -1,0 +1,59 @@
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% extends "layouts/adminLayout.html" %}
+{% block title %}
+Admin-Change Password
+{% endblock %}
+{% block css %}
+
+<link href="../css/users.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block pagecontent %}
+<div class="row">
+    <div class="col-md-2">
+
+    </div>
+
+    <div class="col-md-8">
+        <h3> Cambia password</h3>
+
+
+        {% include "security/_messages.html" %}
+        <form action="{{ url_for('change') }}" method="POST" class="form-group mt-4" name="change_form">
+            {{ change_form.hidden_tag() }}
+              {{ render_field_with_errors(change_form.password, class="form-control") }}
+              {{ render_field_with_errors(change_form.new_password, class="form-control") }}
+              {{ render_field_with_errors(change_form.new_password_confirm, class="form-control") }}
+            <div class="d-flex justify-content-center">
+               {{ render_field(change_form.submit, class="btn btn-success") }}
+            </div>
+
+
+        </form>
+
+
+
+    </div>
+
+
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+ <script src="../js/users.js"></script>
+ {% if changed=='true' %}
+<script>
+    alert("Password aggiornata correttamente")
+</script>
+{% endif %}
+
+{% endblock %}
+
+
+{% block home %}{% endblock %}
+{% block book %}{% endblock %}
+{% block user %}{% endblock %}
+{% block key %}{% endblock %}

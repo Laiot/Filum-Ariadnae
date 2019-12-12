@@ -1,0 +1,117 @@
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% extends "layouts/adminLayout.html" %}
+{% block title %}
+Admin-Keys
+{% endblock %}
+{% block css %}
+<link href="../css/key.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block pagecontent %}
+<div class="row">
+    <div class="col-md-3">
+        <h3>Chiave registrate</h3>
+        <div class="mt-4 list-group">
+            {% if keys|length > 0 %}
+            {% for k in keys %}
+            <li href="#" class="list-group-item" id="{{k.token}}" onclick="keyinfo('{{k.token}}', '{{k.description}}', '{{k.expiration}}', '{{k.urledu}}', '{{k.urlsurvey}}')"> {{ k.description}}</li>
+            {% endfor %}
+            {% else %}
+            <p>Nessuna chiave presente</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <div  id="newkey" class="col-md-9">
+        <h3> Genera una nuova chiave</h3>
+         <form action="{{ url_for('key') }}" method="POST" class="form-group mt-4" name="keyform">
+            {{ render_field_with_errors(keyform.date, class="form-control datepicker",id="expiration", type="date") }}
+             {{keyform.description.label}}
+            {{ keyform.description(rows='3', class="form-control" ) }}
+             <div class="error" style="color:red">
+                 {{ error }}
+             </div>
+            <div class="mt-4 d-flex justify-content-center">
+                <input type="submit" class="btn btn-success" value="Genera URL">
+            </div>
+
+
+        </form>
+
+
+
+
+
+    </div>
+
+     <div  id="keyinfo" class="col-md-9" style="display:none">
+ <h3>Dettagli</h3>
+
+         <div class="row mt-4">
+				<div class="col-lg-4 col-md-6">
+					<div class="single-info">
+						<i class="fa fa-key"></i>
+						<h4>Token</h4>
+                        <p id="token"></p>
+                    </div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-info">
+						<i class="fa fa-info"></i>
+						<h4>Descrizione</h4>
+						<p id="descriptionInfo"></p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-info">
+						<i class="fa fa-calendar"></i>
+						<h4>Data fine validità</h4>
+					<p id="expirationInfo"></p>
+                    </div>
+				</div>
+         </div>
+         <div class="row">
+				<div class="col-lg-6 col-md-6">
+					<div class="single-info">
+						<i class="fa fa-code"></i>
+						<h4> Url Educatore </h4>
+					<p id="urledu"></p></div>
+				</div>
+             	<div class="col-lg-6 col-md-6">
+					<div class="single-info">
+						<i class="fa fa-code"></i>
+						<h4> Url Classe</h4>
+					<p id="urlsurvey"></p></div>
+				</div>
+</div>
+     </div>
+
+    <div  onclick="newkey()" class="float" id="addkey" style="display:none">
+<i class="fa fa-plus my-float"></i>
+</div>
+
+
+
+{% endblock %}
+
+
+{% block script %}
+<script src="../js/key.js"></script>
+
+{% if generated!='false' %}
+<script>
+    alert("chiave generata con successo")
+    $("#{{generated}}").click();
+
+</script>
+{% endif %}
+
+{% endblock %}
+
+
+{% block home %}{% endblock %}
+{% block book %}{% endblock %}
+{% block user %}{% endblock %}
+{% block key %}active{% endblock %}

@@ -1,0 +1,83 @@
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+    background-color:black;
+}
+form li{
+color:red
+}
+textarea {
+  resize: none;
+}
+.single-info {
+	border: 1px solid #eee;
+	padding: 30px 10px;
+	position: relative;
+	text-align: center;
+	margin-bottom: 30px;
+	font-size: 14px;
+
+}
+.single-info i.fa {
+  width: 60px;
+  height: 60px;
+  background-color: #212529;
+  font-size: 25px;
+  color: #fff;
+  line-height: 60px;
+  text-align:center;
+  margin-bottom:20px;
+}
+.single-info i.fa {
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+.single-info:hover i.fa {
+	border-radius: 50%;
+}
+.single-info h4 {
+	text-transform: capitalize;
+	font-size: 22px;
+	margin-bottom: 10px;
+	font-weight: 500;
+}
+
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#212529;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:22px;
+}
+.list-group{
+    height: 72vh;
+    overflow: auto;
+}
+
+
+
+
+}

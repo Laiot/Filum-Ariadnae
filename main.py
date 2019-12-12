@@ -14,7 +14,6 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import os
 
 __doc__ = '''This (simple) web application serves gamebook-style navigable stories from the book/ folder, and proposes a configurable questionnaire at the end of the story.
 The questionnaire data are stored in a ZODB database.
@@ -31,16 +30,14 @@ from uuid import uuid4
 from glob import glob
 from urllib.request import urlopen
 from flask_security import Security, login_required, SQLAlchemySessionUserDatastore
-from server.database import db_session, init_db
-from server.models import User, Role, Survey, Keys
+from database import db_session, init_db
+from models import User, Role,Survey, Keys
 from flask_security.forms import RegisterForm, ChangePasswordForm
 from flask_security.utils import hash_password
 from flask_login import current_user
 from wtforms import Form, DateField, TextAreaField, validators
 from datetime import date
 from secrets import token_hex
-from Randomness.MarkovChain import MarkovChain
-from pathlib import Path
 
 
 app = Flask(__name__, static_url_path='')
@@ -113,13 +110,8 @@ def load_books():
                 abstract = abs_file.read()
         except Exception:
             abstract = 'Un libro-gioco'
-
-        with open(b + '/config.txt', encoding="utf-8") as configs:
-            config_file = configs.read()
-
         dot, g, s = load_book(b)
-        books_directory[b] = booktitle, dot, g, s, abstract, config_file
-        #TODO add the probabilities settings when adding a book
+        books_directory[b] = booktitle, dot, g, s, abstract
 
 
 # setup the books
@@ -249,12 +241,10 @@ def index():
     for b in books_directory:
         booktitle = books_directory[b][0]
         text = books_directory[b][-1]
-        config = books_directory[b][5]
         m = {
             'link': b,
             'title': booktitle,
             'text': text,
-            'configurations': config
         }
         mapping['content'] += s.substitute(m) + '\n'
     return template_page.substitute(mapping)
@@ -288,7 +278,7 @@ def questionario():
         scaled_question_template = _temp.scaled_question_template
         binary_question_template = _temp.binary_question_template
     except ImportError as error:
-        from server.quest import scaled_questions, binary_questions, scaled_question_template, binary_question_template
+        from quest import scaled_questions, binary_questions, scaled_question_template, binary_question_template
 
     scaled_questions_text = '\n'.join(
         [Template(scaled_question_template).substitute({'id': k, 'title': v}) for k, v in scaled_questions.items()])
@@ -360,14 +350,9 @@ def game():
     except KeyError:
         node = None
         history = ''
-    booktitle, dot, g, s, abstract, config = books_directory[path]
-    dirname = Path(__file__).parent.parent
-    probs_file_path = os.path.join(dirname, config.readline().split()[1])
-    first_page = config.readline().split()[1]
-    final_pages = [page for page in config.readline().split()[1:]]
-    mChain = MarkovChain(probs_file_path, first_page, final_pages)
+    booktitle, dot, g, s, abstract = books_directory[path]
     if not node: node = s
-    next = mChain.next_list()                                       #TODO AGGIUNTE PROBABILITA'
+    next = list(g.successors(node))
     mapping = {
         'title': booktitle,
         'content': """			<h3>${name}</h3>
